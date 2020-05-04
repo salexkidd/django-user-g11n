@@ -15,4 +15,3 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(accounts_models.User, CustomUserAdmin)
-

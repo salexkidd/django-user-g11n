@@ -1,0 +1,3 @@
+include README.md
+include README.ja.md
+global-exclude __pycache__

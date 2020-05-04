@@ -29,7 +29,7 @@ $ manage.py startapp accounts
 
 Add the following to your application's models.py
 
-```python
+```
 from django.contrib.auth import models as auth_models
 from user_g11n.models import UserLanguageSupportMixin, UserTimeZoneSupportMixin
 
@@ -46,7 +46,7 @@ class User(UserTimeZoneSupportMixin,
 
 Add a user-extended application and user_g11n to INSTALLED_APPS.
 
-```python
+```
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -65,7 +65,7 @@ INSTALLED_APPS = (
 
 Added two middleware provided by django_user_g11n.
 
-```python
+```
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -86,7 +86,7 @@ MIDDLEWARE = [
 
 Change or add the AUTH_USER_MODEL.
 
-```python
+```
 AUTH_USER_MODEL = 'accounts.User'
 ```
 
@@ -94,7 +94,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 Change the I18N, L10N, and TZ settings.
 
-```python
+```
 USE_I18N = True
 
 USE_L10N = True
@@ -108,8 +108,8 @@ TIME_ZONE = "Asia/Tokyo" # Change to your local timezone
 
 Migration to adapt the changes.
 
-
 ```
+$ ./manage.py makemigrations
 $ ./manage.py migrate
 ```
 
