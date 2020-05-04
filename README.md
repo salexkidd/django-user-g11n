@@ -82,7 +82,7 @@ MIDDLEWARE = [
 ]
 ```
 
-### AUTH_USER_MODELの変更
+### AUTH_USER_MODEL
 
 Change or add the AUTH_USER_MODEL.
 
@@ -90,7 +90,7 @@ Change or add the AUTH_USER_MODEL.
 AUTH_USER_MODEL = 'accounts.User'
 ```
 
-### I18N, L10N & TIME_ZONEの設定
+### I18N, L10N & TIME_ZONE setting
 
 Change the I18N, L10N, and TZ settings.
 
