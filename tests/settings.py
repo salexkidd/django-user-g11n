@@ -15,15 +15,15 @@ DATABASES = {
     }
 }
 SECRET_KEY = "secret_key_for_testing"
-
 MIDDLEWARE_CLASSES = [
-    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'user_g11n.middleware.UserLanguageMiddleware',
     'user_g11n.middleware.UserTimeZoneMiddleware',
+
 ]
+
 MIDDLEWARE = MIDDLEWARE_CLASSES
 
 ROOT_URLCONF = 'tests.urls'
@@ -45,14 +45,12 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = "accounts.User"
+
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
 
-LANGUAGE = "en-us"
-
 TIME_ZONE = "UTC"
-
-AUTH_USER_MODEL = 'accounts.User'

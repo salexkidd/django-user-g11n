@@ -1,5 +1,4 @@
 from django.contrib.auth import models as auth_models
-
 from user_g11n.models import UserLanguageSupportMixin, UserTimeZoneSupportMixin
 
 

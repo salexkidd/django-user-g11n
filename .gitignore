@@ -86,3 +86,4 @@ typings/*
 .vscode
 */docs/_build/
 .envrc
+**/*egg-info
