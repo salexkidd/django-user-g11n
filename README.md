@@ -1,29 +1,33 @@
-
 Django User g11n
 =========================================================================================
 
-Djangoは *i18n* 及び *l10n* に対応しています。しかし、デフォルトの機能としてユーザーのタイムゾーン及び地域を設定する項目は存在しません。
+Django supports *i18n* and *l10n*. However, there is no item to set the user's time zone and region as a default feature.
 
-Django User g11n(i18n + l10n = globalization)は、ユーザーにタイムゾーンと地域を設定するためのフィールドと、それらを適切に扱うためのミドルウェアを提供します。
+Django User g11n (*globalization*) provides fields for users to set time zones and regions, as well as middleware to handle them properly.
+
+<img src="https://raw.githubusercontent.com/wiki/salexkidd/django-user-g11n/imgs/example.gif" width="800px">
+
+Core idea is [See the Django documentation for more information](https://stackoverflow.com/questions/10235956/django-1-4-how-to-automatically-get-users-timezone-from-client)
 
 
-# インストール方法
+# Usage
 
-pypiからパッケージをインストールします
+Install the package from pypi
 
 ```
 $ pip install django-user-g11n
 ```
 
-## ユーザーモデルを拡張する
+## Create a custom user model
 
-ユーザー拡張用のアプリケーションを作成します。名前は
+Create an application for custom users. Please refer to the Django documentation for more information.
+[See the Django documentation for more information](https://docs.djangoproject.com/en/3.0/topics/auth/customizing/)
 
 ```
 $ manage.py startapp accounts
 ```
 
-作成したアプリケーションのmodels.pyに以下を追記します。
+Add the following to your application's models.py
 
 ```python
 from django.contrib.auth import models as auth_models
@@ -36,11 +40,11 @@ class User(UserTimeZoneSupportMixin,
     pass
 ```
 
-## settings.py の変更
+## modifying to settings.py
 
-### INSTALLED_APPSへ追加
+### INSTALLED_APPS
 
-INSTALLED_APPSにユーザー拡張を施したアプリケーションと、user_g11n を追加します。
+Add a user-extended application and user_g11n to INSTALLED_APPS.
 
 ```python
 INSTALLED_APPS = (
@@ -52,14 +56,14 @@ INSTALLED_APPS = (
     .
     .
     .
-    'accounts',  # <= ユーザー拡張用のモデルを含んだアプリケーション
-    'user_g11n', # <= 追加
+    'accounts',  # Your Custom user model application
+    'user_g11n', # Add
 )
 ```
 
-### MIDDLEWAREへ追加
+### MIDDLEWARE
 
-MIDDLEWARE(またはMIDDLEWARE_CLASSES)にミドルウェアを追加します。
+Added two middleware provided by django_user_g11n.
 
 ```python
 MIDDLEWARE = [
@@ -73,14 +77,14 @@ MIDDLEWARE = [
     .
     .
     .
-    'user_g11n.middleware.UserLanguageMiddleware', # <= 追加
-    'user_g11n.middleware.UserTimeZoneMiddleware', # <= 追加
+    'user_g11n.middleware.UserLanguageMiddleware', # Add
+    'user_g11n.middleware.UserTimeZoneMiddleware', # Add
 ]
 ```
 
 ### AUTH_USER_MODELの変更
 
-以下をsettings.pyに追記します
+Change or add the AUTH_USER_MODEL.
 
 ```python
 AUTH_USER_MODEL = 'accounts.User'
@@ -88,7 +92,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 ### I18N, L10N & TIME_ZONEの設定
 
-以下をsettings.py追加します(既に追加されている可能性もあります)
+Change the I18N, L10N, and TZ settings.
 
 ```python
 USE_I18N = True
@@ -97,6 +101,22 @@ USE_L10N = True
 
 USE_TZ = True
 
-TIME_ZONE = "Asia/Tokyo" # あなたのシステムのデフォルトタイムゾーン
+TIME_ZONE = "Asia/Tokyo" # Change to your local timezone
+```
 
+## migrate
+
+Migration to adapt the changes.
+
+
+```
+$ ./manage.py migrate
+```
+
+# Demo
+
+The Docker configuration is provided. Please use the following command to start it. Go to [http://localhost:8000](http://localhost:8000) when the launch is complete.
+
+```
+$ docker-compose up
 ```
