@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  main:
+    build: ./
+    environment:
+      PYTHONPATH: "./"
+      SECRET_KEY: CHANGE-IT-PLEASE-THIS-IS-SUPER-SECRET
+    volumes:
+      - ./example:/var/www
+      - ./user_g11n:/var/www/user_g11n
+      - ./entrypoint.sh:/tmp/entrypoint.sh
+    entrypoint:
+      - /tmp/entrypoint.sh
+    ports:
+      - 8000:8000

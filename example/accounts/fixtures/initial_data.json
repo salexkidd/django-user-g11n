@@ -1,0 +1,22 @@
+[
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$180000$q8vOSNWMrfUJ$7ltFsaPe3197hWOeWykq55i6JhGhZWBemHcJw1guw3k=",
+    "last_login": "2020-05-03T07:35:15Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2020-05-03T07:34:23Z",
+    "timezone": "UTC",
+    "language": "en",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
