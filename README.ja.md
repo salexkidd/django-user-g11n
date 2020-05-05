@@ -1,6 +1,8 @@
 Django User g11n
 =========================================================================================
 
+[![CircleCI](https://circleci.com/gh/salexkidd/django-user-g11n/tree/master.svg?style=svg)](https://circleci.com/gh/salexkidd/django-user-g11n/tree/master)
+
 Djangoは *i18n* 及び *l10n* に対応しています。しかし、デフォルトの機能としてユーザーのタイムゾーン及び地域を設定する項目は存在しません。
 
 Django User g11n (*globalization*)は、ユーザーにタイムゾーンと地域を設定するためのフィールドと、それらを適切に扱うためのミドルウェアを提供します。

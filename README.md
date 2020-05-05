@@ -1,6 +1,8 @@
 Django User g11n
 =========================================================================================
 
+[![CircleCI](https://circleci.com/gh/salexkidd/django-user-g11n/tree/master.svg?style=svg)](https://circleci.com/gh/salexkidd/django-user-g11n/tree/master)
+
 Django supports *i18n* and *l10n*. However, there is no item to set the user's time zone and region as a default feature.
 
 Django User g11n (*globalization*) provides fields for users to set time zones and regions, as well as middleware to handle them properly.
