@@ -1,4 +1,6 @@
+import django
 from django.utils import timezone, translation
+from django.conf import settings
 import pytz
 
 
@@ -7,14 +9,22 @@ class UserLanguageMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        try:
-            user_language = getattr(request.user, 'language', None)
-            translation.activate(user_language)
-            request.session[translation.LANGUAGE_SESSION_KEY] = user_language
-        except Exception as e:
-            pass
+        user_language = getattr(
+            request.user,
+            'language',
+            settings.LANGUAGE_CODE
+        )
+        translation.activate(user_language)
 
-        return self.get_response(request)
+        if django.VERSION[0] <= 2:
+            request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+
+        response = self.get_response(request)
+
+        if django.VERSION[0] >= 3:
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, user_language)
+
+        return response
 
 
 class UserTimeZoneMiddleware:

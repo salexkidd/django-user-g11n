@@ -11,6 +11,8 @@ Django User g11n (*globalization*)は、ユーザーにタイムゾーンと地�
 
 [See the Django documentation for more information](https://stackoverflow.com/questions/10235956/django-1-4-how-to-automatically-get-users-timezone-from-client)
 
+- Support Django 2 and 3
+- Support Python3.7, 3.8 (Maybe 2.7. Not tested)
 
 # インストール方法
 

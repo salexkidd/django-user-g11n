@@ -16,7 +16,7 @@ setup(
     long_description_content_type="text/markdown",
     long_description=readme,
     keywords=["django", "i18n", "l10n", "g11n", "timezone", ],
-    version='0.1',
+    version='0.3',
     packages=['user_g11n'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
