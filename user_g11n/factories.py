@@ -6,10 +6,10 @@ import factory
 from tests.accounts import models as accounts_models
 
 
-class Profile(factory.django.DjangoModelFactory):
+class UserProfile(factory.django.DjangoModelFactory):
     """ User Profile Factory"""
     class Meta:
-        model = accounts_models.Profile
+        model = accounts_models.UserProfile
 
 
 class User(factory.django.DjangoModelFactory):
@@ -24,7 +24,7 @@ class User(factory.django.DjangoModelFactory):
 
     password = make_password("testtest")
 
-    profile = factory.SubFactory(Profile)
+    profile_attr = factory.RelatedFactory(UserProfile, 'user')
 
     class Meta:
         model = get_user_model()

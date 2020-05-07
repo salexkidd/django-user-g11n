@@ -44,7 +44,7 @@ class TestUserLanguage(TestCase):
         )
 
 
-@override_settings(USER_G11N_USERPROFILE_ATTRIBUTE_NAME="profile")
+@override_settings(USER_G11N_USERPROFILE_ATTRIBUTE_NAME="profile_attr")
 class TestUserTimeZoneForProfileModel(TestCase):
     def setUp(self):
         self.client = Client()
@@ -54,14 +54,14 @@ class TestUserTimeZoneForProfileModel(TestCase):
         self.assertEqual(response.content.decode("utf-8"), "UTC")
 
     def test_ja(self):
-        user = accounts_factories.User(profile__timezone="Asia/Tokyo")
+        user = accounts_factories.User(profile_attr__timezone="Asia/Tokyo")
         self.client.force_login(user)
         response = self.client.get(reverse('timezone-test'))
 
         self.assertEqual(response.content.decode("utf-8"), "JST")
 
 
-@override_settings(USER_G11N_USERPROFILE_ATTRIBUTE_NAME="profile")
+@override_settings(USER_G11N_USERPROFILE_ATTRIBUTE_NAME="profile_attr")
 class TestUserLanguageForProfileModel(TestCase):
     def setUp(self):
         self.client = Client()
@@ -76,11 +76,11 @@ class TestUserLanguageForProfileModel(TestCase):
         )
 
     def test_ja(self):
-        user = accounts_factories.User(profile__language="ja")
+        user = accounts_factories.User(profile_attr__language="ja")
         self.client.force_login(user)
         response = self.client.get(reverse('language-test'))
         self.assertEqual(
             response.content.decode("utf-8"),
             "君達の基地は、全て我々がいただいた"
         )
-        self.assertNotEqual(user.language, user.profile.language)
+        self.assertNotEqual(user.language, user.profile_attr.language)
