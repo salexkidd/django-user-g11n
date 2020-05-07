@@ -13,26 +13,11 @@ class User(UserTimeZoneSupportMixin,
     pass
 
 
-class UserProfile(models.Model):
+class UserProfile(UserTimeZoneSupportMixin,
+                  UserLanguageSupportMixin,
+                  models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="profile_attr",
-    )
-
-    timezone = models.CharField(
-        db_index=True,
-        max_length=100,
-        choices=[(t, t) for t in pytz.common_timezones],
-        default="UTC",
-        null=False,
-        blank=False,
-        verbose_name=_("TimeZone")
-    )
-
-    language = models.CharField(
-        max_length=10,
-        choices=settings.LANGUAGES,
-        default=settings.LANGUAGE_CODE,
-        verbose_name=_("Language")
     )
