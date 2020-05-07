@@ -1,7 +1,7 @@
 import django
-from django.utils import timezone, translation
-from django.conf import settings
 import pytz
+from django.conf import settings
+from django.utils import timezone, translation
 
 
 class UserLanguageMiddleware:
@@ -9,11 +9,21 @@ class UserLanguageMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        user_language = getattr(
-            request.user,
-            'language',
-            settings.LANGUAGE_CODE
-        )
+        if request.user.is_anonymous:
+            user_language = settings.LANGUAGE_CODE
+        elif getattr(settings, "USER_G11N_USERPROFILE_ATTRIBUTE_NAME", None):
+            profile = getattr(
+                request.user,
+                settings.USER_G11N_USERPROFILE_ATTRIBUTE_NAME,
+            )
+            user_language = getattr(profile, "language")
+        else:
+            user_language = getattr(
+                request.user,
+                "language",
+                settings.LANGUAGE_CODE
+            )
+
         translation.activate(user_language)
 
         if django.VERSION[0] <= 2:
@@ -32,9 +42,13 @@ class UserTimeZoneMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.user.is_authenticated:
-            timezone.activate(pytz.timezone(request.user.timezone))
-        else:
+        if request.user.is_anonymous:
             timezone.deactivate()
-
+        else:
+            if getattr(settings, "USER_G11N_USERPROFILE_ATTRIBUTE_NAME", None):
+                profile = getattr(request.user, settings.USER_G11N_USERPROFILE_ATTRIBUTE_NAME)
+                user_tz = getattr(profile, "timezone")
+            else:
+                user_tz = getattr(request.user, "timezone")
+            timezone.activate(pytz.timezone(user_tz))
         return self.get_response(request)
