@@ -176,3 +176,8 @@ The Docker configuration is provided. Please use the following command to start 
 ```
 $ docker-compose up
 ```
+
+
+# AUTHORS
+
+[See this](https://github.com/salexkidd/django-user-g11n/blob/master/AUTHORS.md)
