@@ -25,11 +25,10 @@ class UserLanguageMiddleware:
             )
 
         translation.activate(user_language)
+        response = self.get_response(request)
 
         if django.VERSION[0] <= 2:
             request.session[translation.LANGUAGE_SESSION_KEY] = user_language
-
-        response = self.get_response(request)
 
         if django.VERSION[0] >= 3:
             response.set_cookie(settings.LANGUAGE_COOKIE_NAME, user_language)
@@ -46,7 +45,8 @@ class UserTimeZoneMiddleware:
             timezone.deactivate()
         else:
             if getattr(settings, "USER_G11N_USERPROFILE_ATTRIBUTE_NAME", None):
-                profile = getattr(request.user, settings.USER_G11N_USERPROFILE_ATTRIBUTE_NAME)
+                profile = getattr(
+                    request.user, settings.USER_G11N_USERPROFILE_ATTRIBUTE_NAME)
                 user_tz = getattr(profile, "timezone")
             else:
                 user_tz = getattr(request.user, "timezone")

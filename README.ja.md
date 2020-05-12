@@ -24,10 +24,44 @@ pypiからパッケージをインストールします
 $ pip install django-user-g11n
 ```
 
-## カスタムユーザーモデルを作成します
+次に実装方法を以下の2つから選択します。
 
-ユーザーをカスタムするためのアプリケーションを作成します。詳細はDjangoのドキュメントを参照してください。
-[詳細はDjangoのドキュメントを参照してください](https://docs.djangoproject.com/en/3.0/topics/auth/customizing/)
+- プロファイルモデルを利用している場合
+- カスタムユーザーモデルを利用している場合
+
+プロファイルモデルはDjangoのユーザーモデルと *OneToOneField* で結びついている、ユーザーにまつわる情報を扱うモデルを指します。もし、既にこの方式で実装を勧めている場合は *プロファイルモデルを利用している場合* を参照してください。
+
+カスタムユーザーモデルは、Djangoのユーザーモデルそのものを拡張してデータをもたせる方法です。ユーザーをカスタムモデルを利用するためにはアプリケーションを作成し、モデルをカスタマイズします。[詳細はDjangoのドキュメントを参照してください](https://docs.djangoproject.com/en/3.0/topics/auth/customizing/)
+
+## プロファイルモデルを利用する場合
+
+プロファイルモデルを扱うアプリケーションを作成します。
+
+```
+$ manage.py startapp accounts
+
+作成したアプリケーションのmodels.pyに以下を追記します。
+
+```python
+from django.db import models
+from user_g11n.models import UserLanguageSupportMixin, UserTimeZoneSupportMixin
+
+
+class UserProfile(UserTimeZoneSupportMixin,
+                  UserLanguageSupportMixin,
+                  models.Model):
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="profile",
+    )
+```
+
+
+## カスタムユーザーモデルを利用する場合
+
+Djangoはカスタムユーザーモデルを用意し、Django標準のものを拡張することが可能です。
 
 ```
 $ manage.py startapp accounts
@@ -109,6 +143,22 @@ USE_TZ = True
 
 TIME_ZONE = "Asia/Tokyo" # Change to your local timezone
 ```
+
+## プロファイルモデルを利用している場合(プロファイルアトリビュートの指定)
+
+ユーザーモデルに紐付いたプロファイルモデルのアトリビュート名を設定します。
+
+```
+USER_G11N_USERPROFILE_ATTRIBUTE_NAME = "profile"
+```
+
+もしプロファイルモデルで指定したユーザーモデルへのOneToOneField中にて、related_nameが "foobar" になっていれば、ここの値を以下のようにします。
+
+```
+USER_G11N_USERPROFILE_ATTRIBUTE_NAME = "foobar"
+```
+
+
 
 ## migrate
 

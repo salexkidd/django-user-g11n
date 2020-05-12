@@ -23,7 +23,43 @@ Install the package from pypi
 $ pip install django-user-g11n
 ```
 
-## Create a custom user model
+Next, choose one of the following two implementation methods
+
+- Using a profile model
+- Using a custom user model
+
+The profile model refers to a model that handles information about a user that is connected to the Django user model by a *OneToOneField*. If you are already recommending this method of implementation, see *If you are using a profile model*.
+
+A custom user model is a way of extending the Django user model itself to contain data. To get users to take advantage of the custom model, you create an application and customize the model. [See the Django documentation for more information](https://docs.djangoproject.com/en/3.0/topics/auth/customizing/)
+
+
+## Using a profile model
+
+Create an application that handles the profile model.
+
+```
+$ manage.py startapp accounts
+
+Add the following to your application's models.py
+
+```python
+from django.db import models
+from user_g11n.models import UserLanguageSupportMixin, UserTimeZoneSupportMixin
+
+
+class UserProfile(UserTimeZoneSupportMixin,
+                  UserLanguageSupportMixin,
+                  models.Model):
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="profile",
+    )
+```
+
+
+## Using a custom user model
 
 Create an application for custom users. Please refer to the Django documentation for more information.
 [See the Django documentation for more information](https://docs.djangoproject.com/en/3.0/topics/auth/customizing/)
@@ -108,6 +144,21 @@ USE_TZ = True
 
 TIME_ZONE = "Asia/Tokyo" # Change to your local timezone
 ```
+
+## When a profile model is used (specification of profile attributes)
+
+Set the attribute name of the profile model associated with the user model.
+
+```
+USER_G11N_USERPROFILE_ATTRIBUTE_NAME = "profile"
+```
+
+If the related_name is "foobar" in the OneToOneField to the user model specified in the profile model, change the value here to the following
+
+```
+USER_G11N_USERPROFILE_ATTRIBUTE_NAME = "foobar"
+```
+
 
 ## migrate
 
