@@ -1,4 +1,5 @@
 AUTHORS
-```````````````````````
+==============================================================================
 
-- `salexkidd <https://github.com/salexkidd>`_
+- [salexkidd](https://github.com/salexkidd)
+- [lggwettmann](https://github.com/lggwettmann>)
