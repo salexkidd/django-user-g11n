@@ -1,5 +1,12 @@
 import django
-import pytz
+
+from .utils import can_use_pytz
+
+if can_use_pytz():
+    import pytz
+else:
+    import zoneinfo
+
 from django.conf import settings
 from django.utils import timezone, translation
 
@@ -50,5 +57,10 @@ class UserTimeZoneMiddleware:
                 user_tz = getattr(profile, "timezone")
             else:
                 user_tz = getattr(request.user, "timezone")
-            timezone.activate(pytz.timezone(user_tz))
+
+            if can_use_pytz():
+                timezone.activate(pytz.timezone(user_tz))
+            else:
+                timezone.activate(zoneinfo.ZoneInfo(user_tz))
+
         return self.get_response(request)

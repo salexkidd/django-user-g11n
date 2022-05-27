@@ -1,10 +1,26 @@
 """
 TimeZone and Language Mixin Classes
 """
-import pytz
+import django
+
+from .utils import can_use_pytz
+
+if can_use_pytz():
+    import pytz
+    __AVAILABLE_TIMEZONE__ = [(t, t) for t in pytz.common_timezones]
+else:
+    import zoneinfo
+    __AVAILABLE_TIMEZONE__ = [(t, t) for t in zoneinfo.available_timezones()]
+
 from django.conf import settings
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError as e:
+    from django.utils.translation import gettext_lazy as _
+
+
 
 __all__ = (
     "UserTimeZoneSupportMixin",
@@ -13,12 +29,14 @@ __all__ = (
 )
 
 
+
+
 class UserTimeZoneSupportMixin(models.Model):
     """ TimeZone Support """
     timezone = models.CharField(
         db_index=True,
         max_length=100,
-        choices=[(t, t) for t in pytz.common_timezones],
+        choices=__AVAILABLE_TIMEZONE__,
         default="UTC",
         null=False,
         blank=False,

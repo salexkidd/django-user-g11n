@@ -1,5 +1,4 @@
-from django.conf import settings
-from django.test import Client, RequestFactory, TestCase
+from django.test import Client, TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 

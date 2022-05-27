@@ -21,7 +21,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'user_g11n.middleware.UserLanguageMiddleware',
     'user_g11n.middleware.UserTimeZoneMiddleware',
-
 ]
 
 MIDDLEWARE = MIDDLEWARE_CLASSES
