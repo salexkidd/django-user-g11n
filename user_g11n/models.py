@@ -12,6 +12,9 @@ else:
     import zoneinfo
     __AVAILABLE_TIMEZONE__ = [(t, t) for t in zoneinfo.available_timezones()]
 
+__AVAILABLE_TIMEZONE__ = sorted(__AVAILABLE_TIMEZONE__)
+
+
 from django.conf import settings
 from django.db import models
 
@@ -27,8 +30,6 @@ __all__ = (
     "UserLanguageSupportMixin",
     "TimeZoneAndUserLanguageSupportMixin",
 )
-
-
 
 
 class UserTimeZoneSupportMixin(models.Model):

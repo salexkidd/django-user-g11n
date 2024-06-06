@@ -12,7 +12,7 @@ Django User g11n (*globalization*) provides fields for users to set time zones a
 Core idea is [See the Django documentation for more information](https://stackoverflow.com/questions/10235956/django-1-4-how-to-automatically-get-users-timezone-from-client)
 
 - Support 3
-- Support Python3.9 (Maybe 2.7. 3.8)
+- Support 3.10.x or later
 
 
 # Usage
@@ -181,3 +181,8 @@ $ docker-compose up
 # AUTHORS
 
 [See this](https://github.com/salexkidd/django-user-g11n/blob/master/AUTHORS.md)
+
+
+# Release note
+
+- 2024/06/06: Remove Django2 and 3 support and Python 3.9
